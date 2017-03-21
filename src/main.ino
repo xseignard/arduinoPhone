@@ -17,6 +17,7 @@ Button number = Button(6, INPUT_PULLUP);
 int count = 0;
 boolean handled = false;
 boolean dialEnded = false;
+boolean firstPlay = true;
 
 void setup() {
 	Serial.begin(9600);
@@ -41,7 +42,11 @@ void computePhone() {
 
 		if (dialEnded && count != 0) {
 			Serial.println(count);
-			playSound(count);
+			if (firstPlay) {
+				playSound(count - 1);
+				firstPlay = false;
+			}
+			else playSound(count);
 			count = 0;
 		}
 	}
